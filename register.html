@@ -64,7 +64,7 @@
                                         <a>Business name</a>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <input type="text" class ="form-control form-control-user" id="business">
+                                                <input type="text" class ="form-control form-control-user" id="business" readonly>
                                             </div>
                                             <div class="col-3">
                                                 <a class="btn btn-secondary text-white btn-user btn-sm" style="width:100%" id="businessSearchButton" data-toggle="modal" data-target="#searchBusinessModal" >Search</a>
@@ -75,10 +75,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group align-self-end">
-                                        <input type="radio" id="male" name="employee authority" value="Manager">
-                                        <label for="male">Manager</label> &nbsp;&nbsp;&nbsp;
-                                        <input type="radio" id="female" name="employee authority" value="Staff">
-                                        <label for="female">Staff</label><br>
+                                        <input type="radio" id="male" name="employee_authority" value="Manager" onclick="return(false);">
+                                        <label>Manager</label> &nbsp;&nbsp;&nbsp;
+                                        <input type="radio" id="female" name="employee_authority" value="Staff" onclick="return(false);">
+                                        <label>Staff</label><br>
                                     </div>
 
                                     <!--// 모든 입력창을 다 입력해달라는 경고창 -->
@@ -108,7 +108,7 @@
 <!-- - 업체 A : 업체명 / 사업자등록번호 / 주소지 / 대표전화 / 직원리스트(uid)-->
 
 <!-- 이미 등록된 회사가 있는지 검색리스트 보여주는 모달-->
-<div class="modal fade" id="searchBusinessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="searchBusinessModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content align-self-center">
             <div class="modal-header">
@@ -129,26 +129,19 @@
                     </tr>
                     </thead>
                     <tbody id="business_list">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>110111-2222222</td>
-                        <td>스타벅스</td>
-                        <td>서울특별시 강남구 역삼동</td>
-                        <td><input type="radio" name="select"></td>
-                    </tr>
 
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Select</button>
+                <button type="button" class="btn btn-primary" id="selectAlreadyBusinessBtn">Select</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--새로운 회사 등록하는 모달-->
-<div class="modal fade" id="newBusinessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="newBusinessModal" tabindex="-1" role="dialog" >
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content align-self-center">
             <div class="modal-header">
@@ -162,7 +155,7 @@
                 <div class="form-group row">
                     <div class="col-8">
                         <input type="text" class ="form-control form-control-user" id="businessNumber">
-                        <small id="businessNumberNoti" class="form-text text-danger">Please check duplicate!</small>
+                        <small id="businessNumberNoti" class="form-text text-danger">중복 확인을 해주세요</small>
                     </div>
                     <div class="col-4">
                         <a class="btn btn-secondary text-white btn-user btn-sm" id="businessDuplicateButton">Duplicate Check</a>
@@ -172,7 +165,7 @@
 
                 <div class="form-group">
                     Business Name
-                    <input type="text" class="form-control form-control-user" id="businessName">
+                    <input type="text" class="form-control form-control-user" id="businessName" >
                 </div>
                 <div class="form-group">
                     Business Address
@@ -188,7 +181,7 @@
                 Please enter all information!
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" id="newBusinessCreate">Register</button>
+                <button type="button" class="btn btn-primary" id="newBusinessCreate">Register</button>
             </div>
         </div>
     </div>
@@ -198,7 +191,6 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src='js/bootstrap.js'></script>
 
-
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
@@ -206,10 +198,6 @@
 
 <script>
 
-    $('.empty_alert').hide();
-    document.getElementById('createAccountButton').onclick = function () {
-
-    }
 
 
     // Your web app's Firebase configuration
@@ -229,6 +217,9 @@
 
     var database = firebase.database();
     var auth = firebase.auth();
+</script>
+
+<script>
 
     // 계정 생성 버튼 클릭 시
     document.getElementById('createAccountButton').onclick = function () {
@@ -239,8 +230,6 @@
         var email = document.getElementById("email").value.trim();
         var business = document.getElementById("business").value.trim();
 
-        // auth.createUserWithEmailAndPassword(email, password).then().catch()
-        // console.log("Account created in Auth !!!");
 
         if(name == "" || id == "" || password == "" || email == ""|| business == ""){
             var alert = document.getElementById('empty_alert');
@@ -256,9 +245,8 @@
                 authority : "Manager",
                 Approval : true
             });
+
         }
-
-
     };
 
     // 새로운 비즈니스 등록 버튼 클릭 시
@@ -274,6 +262,7 @@
         if(business_num == "" || business_name == "" || business_addr == "" || business_phone == ""){
             var alert = document.getElementById('empty_alert2');
             alert.style= "display:visible;"
+            // 모달 안닫음
         }else{
             database.ref('Business/').push().set({
                 businessNumber : business_num,
@@ -282,33 +271,87 @@
                 businessPhone : business_phone,
                 employeeList : business_employee_arr
             });
+
+            // 새로 비즈니스를 등록했기 때문에 이 user의 직급은 Manager! - radio버튼 자동 선택
+            $("input:radio[name='employee_authority']:radio[value='Manager']").prop('checked', true);
+
+            // 모달 닫기
+            $('#newBusinessModal').modal('hide')
         }
     };
 
 
-
-    // var dbRef = firebase.database().ref().child('text');
-    // dbRef.on('value', snap => business_duplicate_noti.innerText = snap.val());
-
     // 비즈니스 중복 확인 후
-    function isThisBusinessDuplicate() {
+    document.getElementById('businessDuplicateButton').onclick = function() {
 
+        var inputBusinessNum = document.getElementById("businessNumber").value.trim();
+        var business_duplicate_noti = document.getElementById('businessNumberNoti');
 
-        if(true){
-            var business_duplicate_noti = document.getElementById('businessNumberNoti');
-            business_duplicate_noti.innerText = "등록 가능한 사업자등록번호입니다."
-            business_duplicate_noti.className = "form-text text-success"
+        if(inputBusinessNum == ""){
+            business_duplicate_noti.innerText = "사업자등록번호를 입력해주세요"
+            business_duplicate_noti.className = "form-text text-danger"
+        }else {
+            var result = true;
+            var dbUserRef = database.ref().child('/Business');
+
+            dbUserRef.once("value")
+                .then(function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        console.log("data--->"+inputBusinessNum+" / "+childData.businessNumber);
+                        if (childData.businessNumber == inputBusinessNum) {
+                            console.log("data2--->"+inputBusinessNum+" / "+childData.businessNumber);
+                            result = false;
+                        }
+                    });
+                    if (result) {
+                        business_duplicate_noti.innerText = "등록 가능한 사업자등록번호입니다."
+                        business_duplicate_noti.className = "form-text text-success"
+                    } else {
+                        business_duplicate_noti.innerText = "이미 등록 되어있는 사업자등록번호입니다."
+                        business_duplicate_noti.className = "form-text text-danger"
+                    }
+
+                });
+
         }
     }
 
-    var dbUserRef = database.ref().child('Besiness');
-
     // 표에 비즈니스 목록 데이터 row 추가
-    function add_business_data(){
-        $("#business_list").append("<tr><td>" + name + "</td><td>" + email +
-            "</td><td>" + noHP + "</td><td>" + status + "</td></tr>");
+    document.getElementById('businessSearchButton').onclick= function(){
+        var count = 1;
+        var dbUserRef = database.ref().child('/Business');
+
+        dbUserRef.once("value")
+            .then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var key = childSnapshot.key;
+                    var childData = childSnapshot.val();
+
+                    $("#business_list").append("<tr><th scope=\"row\">"+count+"</th><td>"+childData.businessNumber+"</td><td>"+childData.businessName+"</td><td>"
+                        +childData.businessAddress+"</td><td><input type=\"radio\" name=\"selectBusiness\" value="+childData.businessName+"></td></tr>");
+                    count++;
+                });
+            });
     }
 
+    // 비즈니스 선택 버튼 클릭 시
+    document.getElementById('selectAlreadyBusinessBtn').onclick= function() {
+
+        if ($('input:radio[name="selectBusiness"]').is(':checked') == true) {
+            // value를 비즈니스 name에다가 넣기
+            var radioVal = $('input[name="selectBusiness"]:checked').val();
+            $('#business').val(radioVal);
+
+            // 이미 등록되어있는 비즈니스를 선택한 것이므로 이 user의 직급은 staff! - radio버튼 자동 선택
+            $("input:radio[name='employee_authority']:radio[value='Staff']").prop('checked', true);
+
+            // 모달 닫기
+            $('#searchBusinessModal').modal('hide')
+        }else{
+            alert("회사를 선택해주세요")
+        }
+    }
 
 
 </script>
