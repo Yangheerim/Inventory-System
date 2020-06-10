@@ -221,33 +221,39 @@
     var auth = firebase.auth();
 </script>
 
-<script>
+<script type="text/javascript">
 
     // 계정 생성 버튼 클릭 시
     document.getElementById('createAccountButton').onclick = function () {
-        console.log("Here is createAccountButton !!!");
-        var name = document.getElementById("name").value.trim();
-        var id = document.getElementById("id").value.trim();
-        var password = document.getElementById("password2").value.trim();
-        var email = document.getElementById("email").value.trim();
-        var business = document.getElementById("business").value.trim();
-        var authority = $('input[name="employee_authority"]:checked').val();
 
-        if(name == "" || id == "" || password == "" || email == ""|| business == ""){
-            var alert = document.getElementById('empty_alert');
-            alert.style= "display:visible;"
+        var account_duplicate_noti = document.getElementById('userIDNoti');
 
-        }else{
-            database.ref('User/').push().set({
-                name : name,
-                id : id,
-                password : password,
-                email : email,
-                business : business,
-                authority : authority,
-                Approval : true
-            });
+        if(account_duplicate_noti.className == "form-text text-success") {
 
+            console.log("Here is createAccountButton !!!");
+            var name = document.getElementById("name").value.trim();
+            var id = document.getElementById("id").value.trim();
+            var password = document.getElementById("password2").value.trim();
+            var email = document.getElementById("email").value.trim();
+            var business = document.getElementById("business").value.trim();
+            var authority = $('input[name="employee_authority"]:checked').val();
+
+            if (name == "" || id == "" || password == "" || email == "" || business == "") {
+                var alert = document.getElementById('empty_alert');
+                alert.style = "display:visible;"
+
+            } else {
+                database.ref('User/').push().set({
+                    name: name,
+                    id: id,
+                    password: password,
+                    email: email,
+                    business: business,
+                    authority: authority,
+                    Approval: true
+                });
+
+            }
         }
     };
 
@@ -292,31 +298,37 @@
     // 새로운 비즈니스 등록 시
     document.getElementById('newBusinessCreate').onclick = function () {
 
-        console.log("Here is newBusinessCreate !!!");
-        var business_num = document.getElementById("businessNumber").value;
-        var business_name = document.getElementById("businessName").value;
-        var business_addr = document.getElementById("businessAddress").value;
-        var business_phone = document.getElementById("businessPhone").value;
-        var business_employee_arr = new Array();
+        var business_duplicate_noti = document.getElementById('businessNumberNoti');
+        if(business_duplicate_noti.className == "form-text text-success") {
 
-        if(business_num == "" || business_name == "" || business_addr == "" || business_phone == ""){
-            var alert = document.getElementById('empty_alert2');
-            alert.style= "display:visible;"
-            // 모달 안닫음
+            console.log("Here is newBusinessCreate !!!");
+            var business_num = document.getElementById("businessNumber").value;
+            var business_name = document.getElementById("businessName").value;
+            var business_addr = document.getElementById("businessAddress").value;
+            var business_phone = document.getElementById("businessPhone").value;
+            var business_employee_arr = new Array();
+
+            if (business_num == "" || business_name == "" || business_addr == "" || business_phone == "") {
+                var alert = document.getElementById('empty_alert2');
+                alert.style = "display:visible;"
+                // 모달 안닫음
+            } else {
+                database.ref('Business/').push().set({
+                    businessNumber: business_num,
+                    businessName: business_name,
+                    businessAddress: business_addr,
+                    businessPhone: business_phone,
+                    employeeList: business_employee_arr
+                });
+
+                // 새로 비즈니스를 등록했기 때문에 이 user의 직급은 Manager! - radio버튼 자동 선택
+                $("input:radio[name='employee_authority']:radio[value='Manager']").prop('checked', true);
+
+                // 모달 닫기
+                $('#newBusinessModal').modal('hide')
+            }
         }else{
-            database.ref('Business/').push().set({
-                businessNumber : business_num,
-                businessName : business_name,
-                businessAddress : business_addr,
-                businessPhone : business_phone,
-                employeeList : business_employee_arr
-            });
-
-            // 새로 비즈니스를 등록했기 때문에 이 user의 직급은 Manager! - radio버튼 자동 선택
-            $("input:radio[name='employee_authority']:radio[value='Manager']").prop('checked', true);
-
-            // 모달 닫기
-            $('#newBusinessModal').modal('hide')
+            alert("중복 확인을 해주세요");
         }
     };
 
@@ -387,8 +399,9 @@
             // 모달 닫기
             $('#searchBusinessModal').modal('hide')
         }else{
-            alert("회사를 선택해주세요")
+            alert("회사를 선택해주세요");
         }
+
     }
 
 

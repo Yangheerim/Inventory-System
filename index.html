@@ -10,7 +10,6 @@
 
 <!--md(데스크탑)일때는 4를 차지하고 xs(모바일)일때는 6을 차지하라!-->
 
-<h1 id="bigOne">12345</h1>
 <div class="container">
 
     <!-- Outer Row -->
@@ -55,6 +54,10 @@
         </div>
     </div>
 </div>
+<form id = "form1" name = "form1">
+    <input type="hidden" name = "id2" id = "id2">
+    <input type="hidden" name = "pw2" id = "pw2">
+</form>
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -86,49 +89,42 @@
     firebase.analytics();
 
     console.log("firebase object --->", firebaseConfig);
-    var auth = firebase.auth();
     var database = firebase.database();
     console.log(database)
 </script>
-<script>
 
-    // getting the text value from the database
-    var bigOne = document.getElementById('bigOne');
-    var dbRef = firebase.database().ref().child('text');
-    dbRef.on('value', snap => bigOne.innerText = snap.val());
-
-
-    // database.ref('test/').set({"name": "테스트2", "intro": "인삿말"})
-    // console.log("Test Input executed")
-
-
-    // function writeUserData() {
-    //     console.log("Here is test1 --->", firebaseConfig);
-    //     var name = document.getElementById("exampleInputEmail");
-    //     db.ref('users/' + name).set({
-    //         username: name
-    //     });
-    // }
-
-</script>
 <script>
     // 로그인 버튼
-
-    var email = document.getElementById("inputID").value;
-    var password = document.getElementById("inputPassword").value;
 
     document.getElementById('loginButton').onclick = function () {
         console.log("Here is loginButton !!!");
 
-        // auth.signInWithEmailAndPassword(email, password).catch(function(error) {
-        //     var errorCode = error.code;
-        //     console.log("Error Code --->"+errorCode);
-        //     var errorMessage = error.message;
-        //     console.log("Error Message --->"+errorMessage);
-        //
-        // });
+        var id = document.getElementById("inputID").value;
+        var password = document.getElementById("inputPassword").value;
 
-    };
+        var dbUserRef = database.ref().child('/User');
+        var this_user_business_name = "";
+
+        var result = false;
+        var userKey = "";
+
+        dbUserRef.once("value")
+            .then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childData = childSnapshot.val();
+                    if (childData.id == id && childData.password ==password) {
+                        result = true;
+                        userKey = childSnapshot.key;
+                    }
+                });
+                if (result){
+                    location.href = "main.html?userKey="+userKey;
+                }else{
+                    alert("아이디나 비밀번호 오류입니다.")
+                }
+            });
+
+    }
 
 </script>
 
