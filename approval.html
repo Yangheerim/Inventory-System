@@ -3,8 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
+<div class="container" >
+
+    <table class="table" style="width: 100%;">
+        <thead class="thead-light ">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">직원 이름</th>
+            <th scope="col">이메일</th>
+            <th scope="col">상태</th>
+            <th scope="col">승인</th>
+        </tr>
+        </thead>
+        <tbody id="staff_list">
+
+        </tbody>
+    </table>
+
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src='/bootstrap.js'></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-database.js"></script>
+
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
+        authDomain: "inventorysystem-7f9cb.firebaseapp.com",
+        databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
+        projectId: "inventorysystem-7f9cb",
+        storageBucket: "inventorysystem-7f9cb.appspot.com",
+        messagingSenderId: "301963214438",
+        appId: "1:301963214438:web:d6db327dab10860852b7a7",
+        measurementId: "G-568LQ0P1QB"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+</script>
+<script>
+
+
+    function loadApprovalData(){
+        var count = 1;
+        var my_business_name = "스트벅스";
+
+        var dbUserRef = database.ref().child('/User');
+
+        dbUserRef.once("value")
+            .then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childData = childSnapshot.val();
+
+                    if(childData.business == my_business_name && childData.authority == "Staff") {
+
+                        $("#staff_list").append("<tr><th scope=\"row\">" + count + "</th><td>" + childData.name + "</td><td>" + childData.email + "</td><td>"
+                            + "승인 대기" + "</td><td><input type=\"button\" class = \"btn btn-primary\" value=\"승인하기\" name=\"approve_staff\""  + "></td></tr>");
+                        count++;
+                    }
+                });
+            });
+    }
+    loadApprovalData();
+
+</script>
+
+
 
 </body>
 </html>

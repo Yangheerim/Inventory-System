@@ -72,6 +72,9 @@
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-database.js"></script>
 
+
+
+
 <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -118,7 +121,8 @@
                     }
                 });
                 if (result){
-                    location.href = "main.html?userKey="+userKey;
+                    location.href = "home.html?userKey="+userKey;
+                    console.log("로그인 성공!");
                 }else{
                     alert("아이디나 비밀번호 오류입니다.")
                 }

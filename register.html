@@ -237,6 +237,10 @@
             var email = document.getElementById("email").value.trim();
             var business = document.getElementById("business").value.trim();
             var authority = $('input[name="employee_authority"]:checked').val();
+            var approval_result = false;
+            if($('input[name="employee_authority"]:checked').val() == "Manager"){
+                approval_result = true;
+            }
 
             if (name == "" || id == "" || password == "" || email == "" || business == "") {
                 var alert = document.getElementById('empty_alert');
@@ -250,7 +254,7 @@
                     email: email,
                     business: business,
                     authority: authority,
-                    Approval: true
+                    approval: approval_result
                 });
 
             }
