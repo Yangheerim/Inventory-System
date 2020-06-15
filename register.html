@@ -243,8 +243,8 @@
             }
 
             if (name == "" || id == "" || password == "" || email == "" || business == "") {
-                var alert = document.getElementById('empty_alert');
-                alert.style = "display:visible;"
+                var alert_message = document.getElementById('empty_alert');
+                alert_message.style = "display:visible;"
 
             } else {
                 database.ref('User/').push().set({
@@ -257,6 +257,8 @@
                     approval: approval_result
                 });
 
+                alert("등록이 완료되었습니다.");
+                location.href = "index.html";
             }
         }
     };
@@ -294,9 +296,6 @@
 
         }
 
-
-
-
     }
 
     // 새로운 비즈니스 등록 시
@@ -313,8 +312,8 @@
             var business_employee_arr = new Array();
 
             if (business_num == "" || business_name == "" || business_addr == "" || business_phone == "") {
-                var alert = document.getElementById('empty_alert2');
-                alert.style = "display:visible;"
+                var alert_message = document.getElementById('empty_alert2');
+                alert_message.style = "display:visible;"
                 // 모달 안닫음
             } else {
                 database.ref('Business/').push().set({
@@ -327,9 +326,11 @@
 
                 // 새로 비즈니스를 등록했기 때문에 이 user의 직급은 Manager! - radio버튼 자동 선택
                 $("input:radio[name='employee_authority']:radio[value='Manager']").prop('checked', true);
+                $('#business').val(business_name);
 
                 // 모달 닫기
                 $('#newBusinessModal').modal('hide')
+                alert("비즈니스 등록이 완료되었습니다.");
             }
         }else{
             alert("중복 확인을 해주세요");
@@ -375,7 +376,7 @@
     document.getElementById('businessSearchButton').onclick= function(){
         var count = 1;
         var dbUserRef = database.ref().child('/Business');
-
+        $("#business_list").empty();
         dbUserRef.once("value")
             .then(function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
