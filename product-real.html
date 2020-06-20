@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css"> <!-- 부트스트랩에서 제공하는 css파일을 이용하겠다-->
+</head>
+<body>
+
+
+<form class="product">
+    <div class="form-group row">
+        <div class = "col-8">
+            <input type="text" class="form-control form-control-user" id="searchIn">
+        </div>
+        <div class = "col-2">
+            <a class="btn btn-secondary text-white btn-user btn-sm" id="search">Search</a>
+        </div>
+        <div class = "col-2">
+            <a class="btn btn-info text-white btn-user btn-sm" id="newProduct" data-toggle="modal" data-target="#newProductModal">New</a>
+        </div>
+    </div>
+</form>
+
+<center>
+    <table class="table " style="width: 100%;">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">상품 번호</th>
+            <th scope="col">상품명</th>
+            <th scope="col">색상</th>
+            <th scope="col">사이즈</th>
+            <th scope="col">바코드번호</th>
+            <th scope="col">수량</th>
+            <th scope="col">히스토리</th>
+        </tr>
+        </thead>
+        <tbody id="product_list">
+        </tbody>
+    </table>
+</center>
+
+<!--New 버튼 클릭시-->
+<div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content align-self-center">
+            <div class="modal-header">
+                <h6 class="modal-title" id="newProductModalLabel">Product Registration</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                *Product Code (자유롭게 입력 가능합니다.)
+                <div class="form-group row">
+                    <div class="col-8">
+                        <input type="text" class ="form-control form-control-user" id="productCodeNew">
+                        <small id="productCodeNoti" class="form-text text-danger">중복 확인을 해주세요</small>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-secondary text-white btn-user btn-sm" id="codeduplicateButton">Duplicate Check</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    *Product Name
+                    <input type="text" class="form-control form-control-user" id="productNameNew">
+                </div>
+                <div class="form-group">
+                    *Stock
+                    <input type="integer" class="form-control form-control-user" id="productStockNew">
+                </div>
+                <div class="form-group">
+                    *Barcode Number
+                    <input type="text" class="form-control form-control-user" id="productBarcodeNew">
+                </div>
+                (Optional)
+                <div class="form-group">
+                    Size
+                    <input type="text" class="form-control form-control-user" id="productSizeNew" >
+                </div>
+                <div class="form-group">
+                    Color
+                    <input type="text" class="form-control form-control-user" id="productColorNew">
+                </div>
+            </div>
+
+            <!--// 모든 입력창을 다 입력해달라는 경고창 -->
+            <div id="empty_alert2" style="display:none;" class="alert alert-danger">
+                Please enter every * information!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="newProductButton">Register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src='js/bootstrap.js'></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-database.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
+        authDomain: "inventorysystem-7f9cb.firebaseapp.com",
+        databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
+        projectId: "inventorysystem-7f9cb",
+        storageBucket: "inventorysystem-7f9cb.appspot.com",
+        messagingSenderId: "301963214438",
+        appId: "1:301963214438:web:d6db327dab10860852b7a7",
+        measurementId: "G-568LQ0P1QB"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var database = firebase.database();
+    var auth = firebase.auth();
+</script>
+
+<script type="text/javascript">
+
+    // new 버튼 클릭시
+    document.getElementById('newProductButton').onclick = function () {
+
+        var account_duplicate_noti = document.getElementById('productCodeNoti');
+
+        if(account_duplicate_noti.className == "form-text text-success") {
+
+            console.log("Here is createProductButton !!!");
+            var business = user_info.business;
+            var productCode = document.getElementById("productCodeNew").value.trim();
+            var productName = document.getElementById("productNameNew").value.trim();
+            var size = document.getElementById("productSizeNew").value.trim();
+            var color = document.getElementById("productColorNew").value.trim();
+            var stock = document.getElementById("productStockNew").value.trim();
+            var barcode = document.getElementById("productBarcodeNew").value.trim();
+            var history = new Array();
+
+            if (productCode == "" || productName == "" || stock == "" || barcode == "") {
+                var alert_message = document.getElementById('empty_alert');
+                alert_message.style = "display:visible;"
+
+            } else {
+                database.ref('prod/').child(productCode).set({
+                    productCode: productCode,
+                    productName: productName,
+                    size: size,
+                    color: color,
+                    stock: stock,
+                    barcode: barcode,
+                    history: history
+                });
+
+                $('#newProductModal').modal('hide')
+                alert("등록이 완료되었습니다.");
+            }
+        } else{
+            alert("제품코드 중복확인을 해주세요.");
+        }
+    };
+
+
+    // 제품코드 중복확인
+    document.getElementById('codeduplicateButton').onclick = function () {
+
+        var inputProdCode = document.getElementById("productCodeNew").value.trim();
+        var code_duplicate_noti = document.getElementById('productCodeNoti');
+
+        if(inputProdCode == ""){
+            code_duplicate_noti.innerText = "제품 판별코드를 입력하세요."
+            code_duplicate_noti.className = "form-text text-danger"
+        }else {
+            var result = true;
+            var dbProdRef = database.ref().child('/prod');
+
+            dbProdRef.once("value")
+                .then(function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        if (childData.productCode == inputProdCode) {
+                            result = false;
+                        }
+                    });
+                    if (result) {
+                        code_duplicate_noti.innerText = "사용 가능한 제품 코드입니다."
+                        code_duplicate_noti.className = "form-text text-success"
+                    } else {
+                        code_duplicate_noti.innerText = "사용 불가능한 제품 코드입니다."
+                        code_duplicate_noti.className = "form-text text-danger"
+                    }
+
+                });
+
+        }
+
+    }
+
+    function loadProductData(){
+        var count = 1;
+        // var my_business_name = "스트벅스";
+        var my_business_name = user_info.business;
+        $("#product_list").empty();
+
+        var dbUserRef = database.ref().child('/Product');
+        dbUserRef.once("value")
+            .then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childData = childSnapshot.val();
+                    var tmp_id = "r"+count
+
+                    $("#product_list").append("<tr><th scope=\"row\">" + count + "</th><td>" + childData.productCode + "</td><td>" + childData.productName + "</td><td>" + childData.size + "</td><td>" + childData.color + "</td><td>"
+                        + childData.stock + "</th><td>" + childData.barcode + "</td><td>" +"</td><td><input type=\"button\" class = \"btn btn-danger btn-sm\" value=\"승인하기\" name=\"approve_staff\" id="+tmp_id+"></td></tr>");
+
+                    console.log(childData);
+
+                });
+            });
+    }
+    loadProductData();
+
+</script>
+
+    </body>
+</html>

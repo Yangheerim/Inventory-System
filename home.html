@@ -22,7 +22,7 @@
   <ul class="navbar-nav px-3 mr-auto"></ul>
   <ul class="navbar-nav px-3 ">
     <li class="nav-item text-nowrap">
-      <a class="text-light nav-link" id="user_name" ><span data-feather="user"></span>&nbsp;&nbsp;양희림 님</a>
+      <a class="text-light nav-link" id="user_name" ><span data-feather="user"></span>&nbsp;&nbsp;홍길동 님</a>
     </li>
   </ul>
   <ul class="navbar-nav px-3">
@@ -44,12 +44,7 @@
               &nbsp;&nbsp;&nbsp;&nbsp;Products
             </a>
           </li>
-          <li class="nav-item list-group-item">
-            <a class="nav-link" data-toggle="tab" href="#p2">
-              <span data-feather="bar-chart-2"></span>
-              &nbsp;&nbsp;&nbsp;&nbsp;Reports
-            </a>
-          </li>
+
           <li class="nav-item list-group-item">
             <a class="nav-link" id="approval_menu" data-toggle="tab" href="#p3">
               <span data-feather="layers"></span>
@@ -57,9 +52,9 @@
             </a>
           </li>
           <li class="nav-item list-group-item">
-            <a class="nav-link" data-toggle="tab" href="#p4">
-              <span data-feather="settings"></span>
-              &nbsp;&nbsp;&nbsp;&nbsp;Settings
+            <a class="nav-link" data-toggle="tab" href="#p2">
+              <span data-feather="bar-chart-2"></span>
+              &nbsp;&nbsp;&nbsp;&nbsp;Reports
             </a>
           </li>
           <li class="nav-item list-group-item">
@@ -75,15 +70,188 @@
       <div class="tab-content">
         <div class="tab-pane fade show active" id="p1">
           <h5>Product</h5>
+          <div class="container-fluid bgGreyLighten2">
+            <div class="form-group row align-items-center ">
+              <div class="col-2">
+                Product number
+                <input type="text" class="form-control form-control-user form-control-sm" id="search_productNum">
+              </div>
+              <div class="col-2">
+                Product name
+                <input type="text" class="form-control form-control-user form-control-sm" id="search_productName">
+              </div>
+              <div class="col-2">
+                Barcode number
+                <input type="text" class="form-control form-control-user form-control-sm" id="search_barcode">
+              </div >
+              <div class="col-1">
+                <a class="btn btn-secondary text-white btn-user btn-sm m-3" id="searchBtn">Search</a>
+              </div>
+              <div class="col-3">
+              </div>
+              <div class="col align-self-end">
+                <a class="btn btn-info text-white btn-user btn-sm m-3" id="newProduct" data-toggle="modal" data-target="#newProductModal">New Product</a>
+              </div>
+            </div>
+          </div>
+
+<!--          <form class="product">-->
+<!--            <div class="form-group row">-->
+<!--              <div class="col-7">-->
+<!--                <input type="text" class="col-3 form-control form-control-user m-2" id="searchInput">-->
+<!--                <a class="col-1 btn btn-secondary text-white btn-user btn-smm-2" id="searchBtn">Search</a>-->
+<!--                <a class="col-1 btn btn-info text-white btn-user btn-smm-2" id="newProduct" data-toggle="modal" data-target="#newProductModal">New</a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </form>-->
+
+          <center>
+            <table class="table " style="width: 100%;">
+              <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">상품 번호</th>
+                <th scope="col">상품명</th>
+                <th scope="col">색상</th>
+                <th scope="col">사이즈</th>
+                <th scope="col">바코드번호</th>
+                <th scope="col">수량</th>
+              </tr>
+              </thead>
+              <tbody id="product_list">
+              </tbody>
+            </table>
+          </center>
+
+          <!--New 버튼 클릭시-->
+          <div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-dialog-centered " role="document">
+              <div class="modal-content align-self-center">
+                <div class="modal-header">
+                  <h6 class="modal-title" id="newProductModalLabel">Product Registration</h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  *Product Code (자유롭게 입력 가능합니다.)
+                  <div class="form-group row">
+                    <div class="col-8">
+                      <input type="text" class ="form-control form-control-user" id="productCodeNew">
+                      <small id="productCodeNoti" class="form-text text-danger">중복 확인을 해주세요</small>
+                    </div>
+                    <div class="col-4">
+                      <a class="btn btn-secondary text-white btn-user btn-sm" id="codeduplicateButton">Duplicate Check</a>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    *Product Name
+                    <input type="text" class="form-control form-control-user" id="productNameNew">
+                  </div>
+                  <div class="form-group">
+                    *Stock
+                    <input type="integer" class="form-control form-control-user" id="productStockNew">
+                  </div>
+                  <div class="form-group">
+                    *Barcode Number
+                    <input type="text" class="form-control form-control-user" id="productBarcodeNew">
+                  </div>
+                  (Optional)
+                  <div class="form-group">
+                    Size
+                    <input type="text" class="form-control form-control-user" id="productSizeNew" >
+                  </div>
+                  <div class="form-group">
+                    Color
+                    <input type="text" class="form-control form-control-user" id="productColorNew">
+                  </div>
+                </div>
+
+                <!--// 모든 입력창을 다 입력해달라는 경고창 -->
+                <div id="empty_alert2" style="display:none;" class="alert alert-danger">
+                  Please enter every * information!
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="newProductButton">Register</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="tab-pane fade" id="p2">
           <h5>Report</h5>
+          <div>
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title"><b>Inventory History</b></h4>
+                    <canvas id="lineChart"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title"><b>Today's inventory status</b></h4>
+                    <canvas id="barChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title"><b>Company Member</b> </h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                        <tr>
+                          <th>
+                            <b>ID</b>
+                          </th>
+                          <th>
+                            <b>Title</b>
+                          </th>
+                          <th>
+                            <b>Name</b>
+                          </th>
+                          <th>
+                            <b>Authority</b>
+                          </th>
+                          <th>
+                            <b>Company Name</b>
+                          </th>
+                          <th>
+                            <b>E-mail</b>
+                          </th>
+                          <th>
+                            <b>Phone Number</b>
+                          </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
         <div class="tab-pane fade" id="p3">
           <h5>Approval</h5>
           <center>
             <table class="table " style="width: 100%;">
-              <thead class="thead-light ">
+              <thead class="thead-light">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">직원 이름</th>
@@ -100,9 +268,7 @@
             </table>
           </center>
         </div>
-        <div class="tab-pane fade" id="p4">
-          <h5>Setting</h5>
-        </div>
+
         <div class="tab-pane fade" id="p5" >
           <h5>My Page</h5>
         </div>
@@ -236,11 +402,314 @@
           }
         });
       });
+  }
+</script>
+
+<!--상품 페이지-->
+<script type="text/javascript">
+  // search 버튼 클릭시
+  document.getElementById('searchBtn').onclick = function () {
+
+    var search_what = 0;
+
+    var search_productNum = document.getElementById("search_productNum").value.trim();
+    var search_productName = document.getElementById("search_productName").value.trim();
+    var search_productBarcode = document.getElementById("search_barcode").value.trim();
+
+    if(search_productNum!=""){
+      search_what = 1;
+    }else if(search_productName!=""){
+      search_what = 2;
+    }else if(search_productBarcode!=""){
+      search_what = 3;
+    }
+    console.log("option ---->", search_what);
+
+    var count = 1;
+    // var my_business_name = "스트벅스";
+    // var my_business_name = user_info.business;
+    $("#product_list").empty();
+
+    if(search_what == 0){
+      loadProductData()
+    }else {
+      var dbUserRef = database.ref().child('/prod');
+      dbUserRef.once("value")
+        .then(function (snapshot) {
+          snapshot.forEach(function (childSnapshot) {
+            var childData = childSnapshot.val();
+            var tmp_id = "rp" + count
+
+            if (childData.business == user_info.business) { // 내 회사꺼 + 찾고자하는 product code인 경우
+              switch (search_what) {
+                case 1:
+                  if (childData.productCode == search_productNum) {
+                    $("#product_list").append("<tr><th scope=\"row\">" + count + "</th><td>" + childData.productCode + "</td><td>" + childData.productName + "</td><td>" + childData.color + "</td><td>" + childData.size + "</td><td>"
+                            + childData.barcode + "</th><td>"
+                            + "<input type=\"number\" id = \"" + (tmp_id + "n") + "\" value=\"" + childData.stock + "\"/>"
+                            + "<input type=\"button\" class = \"btn btn-primary btn-sm ml-3\" value=\"저장\" name=\"product_num\" id=\"" + tmp_id + "\"></td>");
+
+
+                    document.getElementById(tmp_id).onclick = function () {
+                      var checkBtn = $(this);
+                      var tr = checkBtn.parent().parent();
+                      var td = tr.children();
+                      var product_code = td.eq(1).text();
+                      var tmp = tmp_id + "n";
+                      var product_final_num = document.getElementById(tmp).value;
+                      changeProductNum(product_code, product_final_num - childData.stock);
+                    }
+
+                    console.log("Product Data-->", childData);
+                    count++;
+                  }
+                  break;
+                case 2:
+                  if (childData.productName == search_productName) {
+                    $("#product_list").append("<tr><th scope=\"row\">" + count + "</th><td>" + childData.productCode + "</td><td>" + childData.productName + "</td><td>" + childData.color + "</td><td>" + childData.size + "</td><td>"
+                            + childData.barcode + "</th><td>"
+                            + "<input type=\"number\" id = \"" + (tmp_id + "n") + "\" value=\"" + childData.stock + "\"/>"
+                            + "<input type=\"button\" class = \"btn btn-primary btn-sm ml-3\" value=\"저장\" name=\"product_num\" id=\"" + tmp_id + "\"></td>");
+
+
+                    document.getElementById(tmp_id).onclick = function () {
+                      var checkBtn = $(this);
+                      var tr = checkBtn.parent().parent();
+                      var td = tr.children();
+                      var product_code = td.eq(1).text();
+                      var tmp = tmp_id + "n";
+                      var product_final_num = document.getElementById(tmp).value;
+                      changeProductNum(product_code, product_final_num - childData.stock);
+                    }
+
+                    console.log("Product Data-->", childData);
+                    count++;
+                  }
+                  break;
+                case 3:
+                  if (childData.barcode == search_productBarcode) {
+                    $("#product_list").append("<tr><th scope=\"row\">" + count + "</th><td>" + childData.productCode + "</td><td>" + childData.productName + "</td><td>" + childData.color + "</td><td>" + childData.size + "</td><td>"
+                            + childData.barcode + "</th><td>"
+                            + "<input type=\"number\" id = \"" + (tmp_id + "n") + "\" value=\"" + childData.stock + "\"/>"
+                            + "<input type=\"button\" class = \"btn btn-primary btn-sm ml-3\" value=\"저장\" name=\"product_num\" id=\"" + tmp_id + "\"></td>");
+
+
+                    document.getElementById(tmp_id).onclick = function () {
+                      var checkBtn = $(this);
+                      var tr = checkBtn.parent().parent();
+                      var td = tr.children();
+                      var product_code = td.eq(1).text();
+                      var tmp = tmp_id + "n";
+                      var product_final_num = document.getElementById(tmp).value;
+                      changeProductNum(product_code, product_final_num - childData.stock);
+                    }
+
+                    console.log("Product Data-->", childData);
+                    count++;
+                  }
+                  break;
+
+              }
+
+
+            }
+          });
+        });
+    }
 
   }
 
 
+  // new 버튼 클릭시
+  document.getElementById('newProductButton').onclick = function () {
+
+    var account_duplicate_noti = document.getElementById('productCodeNoti');
+
+    if(account_duplicate_noti.className == "form-text text-success") {
+
+      console.log("Here is createProductButton !!!");
+      var business = user_info.business;
+      var productCode = document.getElementById("productCodeNew").value.trim();
+      var productName = document.getElementById("productNameNew").value.trim();
+      var size = document.getElementById("productSizeNew").value.trim();
+      var color = document.getElementById("productColorNew").value.trim();
+      var stock = document.getElementById("productStockNew").value.trim();
+      var barcode = document.getElementById("productBarcodeNew").value.trim();
+      var history = new Array();
+
+      if (productCode == "" || productName == "" || stock == "" || barcode == "") {
+        var alert_message = document.getElementById('empty_alert');
+        alert_message.style = "display:visible;"
+
+      } else {
+        database.ref('prod/').child(productCode).set({
+          business : user_info.business,
+          productCode: productCode,
+          productName: productName,
+          size: size,
+          color: color,
+          stock: stock,
+          barcode: barcode,
+          history: history
+        });
+
+        $('#newProductModal').modal('hide')
+        location.href = "home.html";
+        alert("등록이 완료되었습니다.");
+      }
+    } else{
+      alert("제품코드 중복확인을 해주세요.");
+    }
+  };
+
+
+  // 제품코드 중복확인
+  document.getElementById('codeduplicateButton').onclick = function () {
+
+    var inputProdCode = document.getElementById("productCodeNew").value.trim();
+    var code_duplicate_noti = document.getElementById('productCodeNoti');
+
+    if(inputProdCode == ""){
+      code_duplicate_noti.innerText = "제품 판별코드를 입력하세요."
+      code_duplicate_noti.className = "form-text text-danger"
+    }else {
+      var result = true;
+      var dbProdRef = database.ref().child('/prod');
+
+      dbProdRef.once("value")
+              .then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                  var childData = childSnapshot.val();
+                  if (childData.productCode == inputProdCode) {
+                    result = false;
+                  }
+                });
+                if (result) {
+                  code_duplicate_noti.innerText = "사용 가능한 제품 코드입니다."
+                  code_duplicate_noti.className = "form-text text-success"
+                } else {
+                  code_duplicate_noti.innerText = "사용 불가능한 제품 코드입니다."
+                  code_duplicate_noti.className = "form-text text-danger"
+                }
+
+              });
+
+    }
+
+  }
+  function getTimeStamp() {
+
+    var d = new Date();
+    var s =
+            leadingZeros(d.getFullYear(), 4) + '-' +
+            leadingZeros(d.getMonth() + 1, 2) + '-' +
+            leadingZeros(d.getDate(), 2);
+
+    return s;
+  }
+  function leadingZeros(n, digits) {
+
+    var zero = '';
+    n = n.toString();
+
+    if (n.length < digits) {
+      for (i = 0; i < digits - n.length; i++)
+        zero += '0';
+    }
+    return zero + n;
+  }
+
+  function loadProductData(){
+    var count = 1;
+    // var my_business_name = "스트벅스";
+    // var my_business_name = user_info.business;
+    $("#product_list").empty();
+
+    var dbUserRef = database.ref().child('/prod');
+    dbUserRef.once("value")
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          var tmp_id = "rp"+count
+
+          if(childData.business == user_info.business) { // 내 회사꺼만
+
+            $("#product_list").append("<tr><th scope=\"row\">" + count + "</th><td>" + childData.productCode + "</td><td>" + childData.productName + "</td><td>" + childData.color + "</td><td>" + childData.size + "</td><td>"
+                    + childData.barcode + "</th><td>"
+                    // + "<input type=\"button\" class = \"btn btn-light btn-sm m-1\" value=\"-\" name=\"approve_staff\" id="+(tmp_id+"-")+">"
+                    + "<input type=\"number\" id = \""+(tmp_id+"n")+"\" value=\"" + childData.stock + "\"/>"
+                    // + "<input type=\"button\" class = \"btn btn-light btn-sm m-1\" value=\"+\" name=\"approve_staff\" id="+(tmp_id+"+")+">"
+                    + "<input type=\"button\" class = \"btn btn-primary btn-sm ml-3\" value=\"저장\" name=\"product_num\" id=\"" + tmp_id+ "\"></td>");
+
+
+            document.getElementById(tmp_id).onclick= function() {
+              var checkBtn = $(this);
+              var tr = checkBtn.parent().parent();
+              var td = tr.children();
+              var product_code = td.eq(1).text();
+              var tmp = tmp_id+"n";
+              var product_final_num = document.getElementById(tmp).value;
+              changeProductNum(product_code, product_final_num-childData.stock);
+            }
+
+            console.log("Product Data-->", childData);
+            count++;
+          }
+        });
+      });
+  }
+  loadProductData();
+
+
+  function changeProductNum(product_code, num){
+    var count = 1;
+    num *= 1;
+
+    var dbUserRef = database.ref().child('/prod');
+
+    dbUserRef.once("value")
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          if(childData.productCode ==product_code){
+            var tmp_stock = childData.stock*1;
+            childData.stock = tmp_stock + num;
+            var today = getTimeStamp();
+            if(childData.history != null) {
+              var history = childData.history;
+              history.push(today + "/" + num);
+            }else{
+              var history = new Array();
+              history.push(today + "/" + num);
+            }
+            childData.history=history;
+            database.ref('prod/' + childSnapshot.key+'/').set(childData);
+            alert("재고 수량이 변경되었습니다.")
+            loadProductData();
+          }
+        });
+      });
+  }
+
+
+
 </script>
 
+<script src="vendors/base/vendor.bundle.base.js"></script>
+<script src="js/off-canvas.js"></script>
+<script src="js/hoverable-collapse.js"></script>
+<script src="js/template.js"></script>
+
+<script src="js/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
 </body>
 </html>
