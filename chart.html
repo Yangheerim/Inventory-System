@@ -1,120 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Inventory Management</title>
+    <!-- plugins:css -->
     <link rel="stylesheet" href="css/bootstrap.css"> <!-- 부트스트랩에서 제공하는 css파일을 이용하겠다-->
 </head>
+</head>
+
 <body>
 
-    <div class="content-wrapper">
 
-        <div class="row">
-            <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title"><b>Inventory History</b></h4>
-                        <canvas id="lineChart"></canvas>
-                    </div>
-                </div>
+<div class="animated fadeIn">
+
+    <div class="col-9 grid-margin" style=margin:auto;>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"><b>Today's inventory status</b></h4>
+                <canvas id="barChart"></canvas>
             </div>
-            <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title"><b>Today's inventory status</b></h4>
-                        <canvas id="barChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
     </div>
 
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-12 grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title"><b>Company Member</b> </h4>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        <b>ID</b>
-                                    </th>
-                                    <th>
-                                        <b>Title</b>
-                                    </th>
-                                    <th>
-                                        <b>Name</b>
-                                    </th>
-                                    <th>
-                                        <b>Authority</b>
-                                    </th>
-                                    <th>
-                                        <b>Company Name</b>
-                                    </th>
-                                    <th>
-                                        <b>E-mail</b>
-                                    </th>
-                                    <th>
-                                        <b>Phone Number</b>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
+    <div class="row">
+        <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+            <div class="card">
+                <div class="card-body">
 
-                                </tbody>
-                            </table>
-                        </div>
+
+                    <h4 class="card-title"><b>Monthly</b><br><b>Inventory History</b></h4>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <select dir="rtl" name="select1" id="monthlyProductSelector" onchange="onChangeMonthlySelector(this.value);" >
+                    </select>
+
+                    <div id="div1" width="300" height="200" style="display:none;">
+                        div1
                     </div>
+                    <div id="div2" width="300" height="200" style="display:none;">
+                        div2
+                    </div>
+                    <div id="div3" width="300" height="200" style="display:none;">
+                        div3
+                    </div>
+
+                    <canvas id="lineChart1"></canvas>
                 </div>
+
             </div>
         </div>
 
 
+        <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <b>June Weekly</b> <br>
+                        <b>Inventory History </b></h4>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+                    <select dir="rtl" name="select1" id="weeklyProductSelector" onchange="onChangeWeeklySelector(this.value);" >
+                    </select>
 
-
-    <footer class="footer">
-        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2018 <a href="https://www.templatewatch.com/" target="_blank">Templatewatch</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                    <div id="div1" width="300" height="200" style="display:none;">
+                        div1
+                    </div>
+                    <div id="div2" width="300" height="200" style="display:none;">
+                        div2
+                    </div>
+                    <div id="div3" width="300" height="200" style="display:none;">
+                        div3
+                    </div>
+                    <canvas id="lineChart2"></canvas>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
 
+
+</div>
+
+<footer class="footer">
+
+</footer>
 
 </div>
 </div>
 </div>
-
-
 <script src="vendors/base/vendor.bundle.base.js"></script>
+<script src="vendors/chart.js/Chart.min.js"></script>
 <script src="js/off-canvas.js"></script>
-<script src="js/hoverable-collapse.js"></script>
-<script src="js/template.js"></script>
-
 <script src="js/chart.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
-
-
 <script src="js/off-canvas.js"></script>
 
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<!-- <script src="https://www.gstatic.com/firebasejs/7.15.2/firebase-analytics.js"></script> -->
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
+        authDomain: "inventorysystem-7f9cb.firebaseapp.com",
+        databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
+        projectId: "inventorysystem-7f9cb",
+        storageBucket: "inventorysystem-7f9cb.appspot.com",
+        messagingSenderId: "301963214438",
+        appId: "1:301963214438:web:d6db327dab10860852b7a7",
+        measurementId: "G-568LQ0P1QB"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+    const db = firebase.database()
+    var products = []
+
+    // console.log(firebase)
+
+    db.ref("prod").on('value', function(querySnapshot) {
+        products = Object.values(querySnapshot.val())
+        products.forEach((product, index) => {
+            product['monthlyStocks'] = {
+                'April': 0,
+                'May': 0,
+                'June': 0,
+            }
+            product['weeklyStocks'] = {
+                '1st week': 0,
+                '2nd week': 0,
+                '3rd week': 0,
+                '4th week': 0,
+            }
+
+            // 월별 히스토리
+            product.history.forEach((h) => {
+                let date = h.split('/')[0]
+                let count = Number(h.split('/')[1])
+                if(date.includes("2020-04")) {
+                    product.monthlyStocks['April'] += count
+                } else if(date.includes("2020-05")) {
+                    product.monthlyStocks['May'] += count
+                } else {
+                    product.monthlyStocks['June'] += count
+                    let day = Number(date.substring(8,10))
+                    if(day >= 1 && day <=7) {
+                        product.weeklyStocks['1st week'] += count
+                    } else if(day >= 8 && day <=14) {
+                        product.weeklyStocks['2nd week'] += count
+                    } else if(day >= 15 && day <=21) {
+                        product.weeklyStocks['3rd week'] += count
+                    } else {
+                        product.weeklyStocks['4th week'] += count
+                    }
+                }
+            })
+
+            if($("#monthlyProductSelector > option").get().length < products.length) {
+                $("#monthlyProductSelector").append(new Option(product.productName, index))
+            }
+            if($("#monthlyProductSelector > option").get().length < products.length) {
+                $("#weeklyProductSelector").append(new Option(product.productName, index))
+            }
+
+            return product
+        })
+        let names = products.map((product) => product.productName)
+        let stocks = products.map((product) => product.stock)
+
+        updateBarChart(names, stocks)
+        updateMonthlyChart(products[0].monthlyStocks)
+        updateWeeklyChart(products[0].weeklyStocks)
+    });
+
+    function onChangeMonthlySelector(productIndex){
+        updateMonthlyChart(products[productIndex].monthlyStocks)
+    }
+    function onChangeWeeklySelector(productIndex){
+        updateWeeklyChart(products[productIndex].weeklyStocks)
+    }
 
 
-
-
-
+</script>
 </body>
+
 </html>
