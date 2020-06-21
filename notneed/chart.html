@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <title>Inventory Management</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="css/bootstrap.css"> <!-- 부트스트랩에서 제공하는 css파일을 이용하겠다-->
+    <link rel="stylesheet" href="../css/bootstrap.css"> <!-- 부트스트랩에서 제공하는 css파일을 이용하겠다-->
 </head>
 </head>
 
@@ -97,20 +97,17 @@
 </div>
 </div>
 </div>
-<script src="vendors/base/vendor.bundle.base.js"></script>
-<script src="vendors/chart.js/Chart.min.js"></script>
-<script src="js/off-canvas.js"></script>
-<script src="js/chart.js"></script>
-<script src="js/off-canvas.js"></script>
+<script src="../vendors/base/vendor.bundle.base.js"></script>
+<script src="../vendors/chart.js/Chart.min.js"></script>
+<script src="../js/off-canvas.js"></script>
+<script src="../js/chart.js"></script>
+<script src="../js/off-canvas.js"></script>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<!-- <script src="https://www.gstatic.com/firebasejs/7.15.2/firebase-analytics.js"></script> -->
+
 <script>
-    // Your web app's Firebase configuration
     var firebaseConfig = {
         apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
         authDomain: "inventorysystem-7f9cb.firebaseapp.com",
@@ -127,7 +124,6 @@
     const db = firebase.database()
     var products = []
 
-    // console.log(firebase)
 
     db.ref("prod").on('value', function(querySnapshot) {
         products = Object.values(querySnapshot.val())

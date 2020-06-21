@@ -57,12 +57,7 @@
               &nbsp;&nbsp;&nbsp;&nbsp;Reports
             </a>
           </li>
-          <li class="nav-item list-group-item">
-            <a class="nav-link" data-toggle="tab" href="#p5">
-              <span data-feather="user"></span>
-              &nbsp;&nbsp;&nbsp;&nbsp;My Page
-            </a>
-          </li>
+
         </ul>
       </div>
     </nav>
@@ -187,7 +182,7 @@
               <div class="col-9 grid-margin" style=margin:auto;>
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title"><b>Today's inventory status</b></h4>
+                    <h6 class="card-title"><b>Today's inventory status</b></h6>
                     <canvas id="barChart"></canvas>
                   </div>
                 </div>
@@ -197,9 +192,7 @@
                 <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
                   <div class="card">
                     <div class="card-body">
-
-
-                      <h4 class="card-title"><b>Monthly</b><br><b>Inventory History</b></h4>
+                      <h6 class="card-title"><b>Monthly</b><br><b>Inventory History</b></h6>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -229,9 +222,9 @@
                 <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">
+                      <h6 class="card-title">
                         <b>June Weekly</b> <br>
-                        <b>Inventory History </b></h4>
+                        <b>Inventory History </b></h6>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -255,7 +248,7 @@
                   </div>
                 </div>
               </div>
-
+            </div>
 
             </div>
         </div>
@@ -281,9 +274,6 @@
           </center>
         </div>
 
-        <div class="tab-pane fade" id="p5" >
-          <h5>My Page</h5>
-        </div>
       </div>
 
     </main>
@@ -714,13 +704,93 @@
 
 
 </script>
+<script>
+  // var firebaseConfig = {
+  //   apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
+  //   authDomain: "inventorysystem-7f9cb.firebaseapp.com",
+  //   databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
+  //   projectId: "inventorysystem-7f9cb",
+  //   storageBucket: "inventorysystem-7f9cb.appspot.com",
+  //   messagingSenderId: "301963214438",
+  //   appId: "1:301963214438:web:d6db327dab10860852b7a7",
+  //   measurementId: "G-568LQ0P1QB"
+  // };
+  // // Initialize Firebase
+  // firebase.initializeApp(firebaseConfig);
+  // // firebase.analytics();
+  // const db = firebase.database()
+  var products = []
 
+
+  database.ref("prod").on('value', function(querySnapshot) {
+    products = Object.values(querySnapshot.val())
+    products.forEach((product, index) => {
+      product['monthlyStocks'] = {
+        'April': 0,
+        'May': 0,
+        'June': 0,
+      }
+      product['weeklyStocks'] = {
+        '1st week': 0,
+        '2nd week': 0,
+        '3rd week': 0,
+        '4th week': 0,
+      }
+
+      // 월별 히스토리
+      product.history.forEach((h) => {
+        let date = h.split('/')[0]
+        let count = Number(h.split('/')[1])
+        if(date.includes("2020-04")) {
+          product.monthlyStocks['April'] += count
+        } else if(date.includes("2020-05")) {
+          product.monthlyStocks['May'] += count
+        } else {
+          product.monthlyStocks['June'] += count
+          let day = Number(date.substring(8,10))
+          if(day >= 1 && day <=7) {
+            product.weeklyStocks['1st week'] += count
+          } else if(day >= 8 && day <=14) {
+            product.weeklyStocks['2nd week'] += count
+          } else if(day >= 15 && day <=21) {
+            product.weeklyStocks['3rd week'] += count
+          } else {
+            product.weeklyStocks['4th week'] += count
+          }
+        }
+      })
+
+      if($("#monthlyProductSelector > option").get().length < products.length) {
+        $("#monthlyProductSelector").append(new Option(product.productName, index))
+      }
+      if($("#monthlyProductSelector > option").get().length < products.length) {
+        $("#weeklyProductSelector").append(new Option(product.productName, index))
+      }
+
+      return product
+    })
+    let names = products.map((product) => product.productName)
+    let stocks = products.map((product) => product.stock)
+
+    updateBarChart(names, stocks)
+    updateMonthlyChart(products[0].monthlyStocks)
+    updateWeeklyChart(products[0].weeklyStocks)
+  });
+
+  function onChangeMonthlySelector(productIndex){
+    updateMonthlyChart(products[productIndex].monthlyStocks)
+  }
+  function onChangeWeeklySelector(productIndex){
+    updateWeeklyChart(products[productIndex].weeklyStocks)
+  }
+
+
+</script>
 <script src="vendors/base/vendor.bundle.base.js"></script>
+<script src="vendors/chart.js/Chart.min.js"></script>
 <script src="js/off-canvas.js"></script>
-<script src="js/hoverable-collapse.js"></script>
-<script src="js/template.js"></script>
-
 <script src="js/chart.js"></script>
+<script src="js/off-canvas.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
 
