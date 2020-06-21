@@ -182,17 +182,9 @@
         <div class="tab-pane fade" id="p2">
           <h5>Report</h5>
           <div>
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title"><b>Inventory History</b></h4>
-                    <canvas id="lineChart"></canvas>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+            <div class="animated fadeIn">
+
+              <div class="col-9 grid-margin" style=margin:auto;>
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title"><b>Today's inventory status</b></h4>
@@ -200,52 +192,72 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title"><b>Company Member</b> </h4>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                        <tr>
-                          <th>
-                            <b>ID</b>
-                          </th>
-                          <th>
-                            <b>Title</b>
-                          </th>
-                          <th>
-                            <b>Name</b>
-                          </th>
-                          <th>
-                            <b>Authority</b>
-                          </th>
-                          <th>
-                            <b>Company Name</b>
-                          </th>
-                          <th>
-                            <b>E-mail</b>
-                          </th>
-                          <th>
-                            <b>Phone Number</b>
-                          </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
+              <div class="row">
+                <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+
+
+                      <h4 class="card-title"><b>Monthly</b><br><b>Inventory History</b></h4>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                      <select dir="rtl" name="select1" id="monthlyProductSelector" onchange="onChangeMonthlySelector(this.value);" >
+                      </select>
+
+                      <div id="div1" width="300" height="200" style="display:none;">
+                        div1
+                      </div>
+                      <div id="div2" width="300" height="200" style="display:none;">
+                        div2
+                      </div>
+                      <div id="div3" width="300" height="200" style="display:none;">
+                        div3
+                      </div>
+
+                      <canvas id="lineChart1"></canvas>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">
+                        <b>June Weekly</b> <br>
+                        <b>Inventory History </b></h4>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                      <select dir="rtl" name="select1" id="weeklyProductSelector" onchange="onChangeWeeklySelector(this.value);" >
+                      </select>
+
+                      <div id="div1" width="300" height="200" style="display:none;">
+                        div1
+                      </div>
+                      <div id="div2" width="300" height="200" style="display:none;">
+                        div2
+                      </div>
+                      <div id="div3" width="300" height="200" style="display:none;">
+                        div3
+                      </div>
+                      <canvas id="lineChart2"></canvas>
                     </div>
                   </div>
                 </div>
               </div>
+
+
             </div>
-          </div>
-        </div>
         </div>
         <div class="tab-pane fade" id="p3">
           <h5>Approval</h5>
