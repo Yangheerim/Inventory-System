@@ -542,6 +542,9 @@
       var barcode = document.getElementById("productBarcodeNew").value.trim();
       var history = new Array();
 
+      var today  = getTimeStamp();
+      history.push(today + "/0");
+
       if (productCode == "" || productName == "" || stock == "" || barcode == "") {
         var alert_message = document.getElementById('empty_alert');
         alert_message.style = "display:visible;"
@@ -559,7 +562,7 @@
         });
 
         $('#newProductModal').modal('hide')
-        location.href = "home.html";
+        location.reload(true);
         alert("등록이 완료되었습니다.");
       }
     } else{
