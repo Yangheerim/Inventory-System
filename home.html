@@ -711,22 +711,8 @@
 
 </script>
 <script>
-  // var firebaseConfig = {
-  //   apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
-  //   authDomain: "inventorysystem-7f9cb.firebaseapp.com",
-  //   databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
-  //   projectId: "inventorysystem-7f9cb",
-  //   storageBucket: "inventorysystem-7f9cb.appspot.com",
-  //   messagingSenderId: "301963214438",
-  //   appId: "1:301963214438:web:d6db327dab10860852b7a7",
-  //   measurementId: "G-568LQ0P1QB"
-  // };
-  // // Initialize Firebase
-  // firebase.initializeApp(firebaseConfig);
-  // // firebase.analytics();
-  // const db = firebase.database()
-  var products = []
 
+  var products = []
 
   database.ref("prod").on('value', function(querySnapshot) {
     products = Object.values(querySnapshot.val())

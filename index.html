@@ -109,6 +109,7 @@
         var this_user_business_name = "";
 
         var result = false;
+        var result2 = false;
         var userKey = "";
 
         dbUserRef.once("value")
@@ -116,14 +117,21 @@
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
                     if (childData.id == id && childData.password ==password) {
-                        result = true;
-                        userKey = childSnapshot.key;
+                        if(childData.approval == true){
+                            result = true;
+                            userKey = childSnapshot.key;
+                        }else{
+                            result2 = true;
+                        }
+
                     }
                 });
                 if (result){
                     location.href = "home.html?userKey="+userKey;
                     console.log("로그인 성공!");
-                }else{
+                }else if(result2 == true){
+                    alert("승인 심사중입니다. 조금만 기다려주세요.")
+                }else if (result2 == false){
                     alert("아이디나 비밀번호 오류입니다.")
                 }
             });
