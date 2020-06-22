@@ -27,7 +27,7 @@
   </ul>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="text-light nav-link" href="#"><span data-feather="log-out"></span>&nbsp;&nbsp;Sign out</a>
+      <a class="text-light nav-link" id = "signOutBtn" href="#"><span data-feather="log-out"></span>&nbsp;&nbsp;Sign out</a>
     </li>
   </ul>
 </nav>
@@ -409,6 +409,11 @@
           }
         });
       });
+  }
+
+
+  document.getElementById('signOutBtn').onclick = function () {
+    location.href = "index.html";
   }
 </script>
 
