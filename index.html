@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="css/bootstrap.css"> <!-- 부트스트랩에서 제공하는 css파일을 이용하겠다-->
+    <meta name="viewport" content="width=device-width">
+    <title>QUnit Example</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.6.0.css">
 <!--    <link rel="stylesheet" href="css/site.css">-->
 </head>
 <body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="https://code.jquery.com/qunit/qunit-2.6.0.js"></script>
+<script src="test.js"></script>
 
 <!--md(데스크탑)일때는 4를 차지하고 xs(모바일)일때는 6을 차지하라!-->
 
@@ -76,24 +83,27 @@
 
 
 <script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
-        authDomain: "inventorysystem-7f9cb.firebaseapp.com",
-        databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
-        projectId: "inventorysystem-7f9cb",
-        storageBucket: "inventorysystem-7f9cb.appspot.com",
-        messagingSenderId: "301963214438",
-        appId: "1:301963214438:web:d6db327dab10860852b7a7",
-        measurementId: "G-568LQ0P1QB"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    function connectFirebase(){
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
+            authDomain: "inventorysystem-7f9cb.firebaseapp.com",
+            databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
+            projectId: "inventorysystem-7f9cb",
+            storageBucket: "inventorysystem-7f9cb.appspot.com",
+            messagingSenderId: "301963214438",
+            appId: "1:301963214438:web:d6db327dab10860852b7a7",
+            measurementId: "G-568LQ0P1QB"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
 
-    console.log("firebase object --->", firebaseConfig);
-    var database = firebase.database();
-    console.log(database)
+        console.log("firebase object --->", firebaseConfig);
+        var database = firebase.database();
+        console.log(database);
+    }
+    connectFirebase()
 </script>
 
 <script>
