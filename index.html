@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="css/bootstrap.css"> <!-- 부트스트랩에서 제공하는 css파일을 이용하겠다-->
+    <link rel="stylesheet" href="css/bootstrap.css">
     <meta name="viewport" content="width=device-width">
     <title>QUnit Example</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.6.0.css">
-<!--    <link rel="stylesheet" href="css/site.css">-->
+
 </head>
 <body>
-<div id="qunit"></div>
-<div id="qunit-fixture"></div>
-<script src="https://code.jquery.com/qunit/qunit-2.6.0.js"></script>
-<script src="test.js"></script>
+<!--
+Login Page
 
-<!--md(데스크탑)일때는 4를 차지하고 xs(모바일)일때는 6을 차지하라!-->
+The first page is the login page.
+If you do not have an existing account, you can go to the register page.
+If you already have an account, you can log in by entering your ID and password.
+If the ID or password is wrong, it shows a warning window that it is wrong.
+If the user's position is a manager, login can be made immediately without approval process,
+and if the user is a general employee, login can be made only when the manager approves it.
+-->
+
+<!--for unit test-->
+<!--<div id="qunit"></div>-->
+<!--<div id="qunit-fixture"></div>-->
+<!--<script src="https://code.jquery.com/qunit/qunit-2.6.0.js"></script>-->
+<!--<script src="test.js"></script>-->
+
 
 <div class="container">
 
@@ -26,7 +37,6 @@
 
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="p-5">
@@ -35,21 +45,18 @@
                                 </div>
                                 <form class="user">
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="inputID" aria-describedby="emailHelp" placeholder="Id">
+                                        <input type="email" class="form-control form-control-user" id="inputID"
+                                               aria-describedby="emailHelp" placeholder="Id">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" id="inputPassword" placeholder="Password">
+                                        <input type="password" class="form-control form-control-user" id="inputPassword"
+                                               placeholder="Password">
                                     </div>
-                                    <a class="btn btn-primary text-white btn-user btn-block " id="loginButton" onclick="writeUserData();">
+                                    <a class="btn btn-primary text-white btn-user btn-block " id="loginButton">
                                         Login
                                     </a>
                                     <hr>
                                 </form>
-
-<!--                                <div class="text-center">-->
-<!--                                    <a class="small" href="forgot-password.html">Forgot Password?</a>-->
-<!--                                </div>-->
-
                                 <div class="text-center">
                                     <a class="small" href="register.html">Create an Account!</a>
                                 </div>
@@ -61,54 +68,44 @@
         </div>
     </div>
 </div>
-<form id = "form1" name = "form1">
-    <input type="hidden" name = "id2" id = "id2">
-    <input type="hidden" name = "pw2" id = "pw2">
+<form id="form1" name="form1">
+    <input type="hidden" name="id2" id="id2">
+    <input type="hidden" name="pw2" id="pw2">
 </form>
 
-
+<!--jquery-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src='/bootstrap.js'></script> <!-- 부트스트랩에서 필요한 자바스크립트를 이용하겠다-->
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
+<!--bootstrap-->
+<script type="text/javascript" src='/bootstrap.js'></script>
+
+<!--firebase js file-->
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-database.js"></script>
-
-
-
-
 <script>
-    function connectFirebase(){
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
-            authDomain: "inventorysystem-7f9cb.firebaseapp.com",
-            databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
-            projectId: "inventorysystem-7f9cb",
-            storageBucket: "inventorysystem-7f9cb.appspot.com",
-            messagingSenderId: "301963214438",
-            appId: "1:301963214438:web:d6db327dab10860852b7a7",
-            measurementId: "G-568LQ0P1QB"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
 
-        console.log("firebase object --->", firebaseConfig);
-        var database = firebase.database();
-        console.log(database);
-    }
-    connectFirebase()
+    // connect with firebase
+    var firebaseConfig = {
+        apiKey: "AIzaSyAJHIyMYLbLaou3TC9Jxu7bCrvY9mvA5v8",
+        authDomain: "inventorysystem-7f9cb.firebaseapp.com",
+        databaseURL: "https://inventorysystem-7f9cb.firebaseio.com",
+        projectId: "inventorysystem-7f9cb",
+        storageBucket: "inventorysystem-7f9cb.appspot.com",
+        messagingSenderId: "301963214438",
+        appId: "1:301963214438:web:d6db327dab10860852b7a7",
+        measurementId: "G-568LQ0P1QB"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+
+
 </script>
 
 <script>
-    // 로그인 버튼
-
+    // Confirm that the ID and password are valid when selecting the login button
     document.getElementById('loginButton').onclick = function () {
         console.log("Here is loginButton !!!");
 
@@ -126,30 +123,28 @@
             .then(function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    if (childData.id == id && childData.password ==password) {
-                        if(childData.approval == true){
+                    if (childData.id == id && childData.password == password) {
+                        if (childData.approval == true) {
                             result = true;
                             userKey = childSnapshot.key;
-                        }else{
+                        } else {
                             result2 = true;
                         }
 
                     }
                 });
-                if (result){
-                    location.href = "home.html?userKey="+userKey;
+                if (result) {
+                    location.href = "home.html?userKey=" + userKey;
                     console.log("로그인 성공!");
-                }else if(result2 == true){
+                } else if (result2 == true) {
                     alert("승인 심사중입니다. 조금만 기다려주세요.")
-                }else if (result2 == false){
+                } else if (result2 == false) {
                     alert("아이디나 비밀번호 오류입니다.")
                 }
             });
-
     }
 
 </script>
-
 
 
 </body>
